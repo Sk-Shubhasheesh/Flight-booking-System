@@ -2,6 +2,7 @@ const { StatusCodes } = require('http-status-codes')
 
 const { AirplaneService } = require('../services');
 const { response } = require('express');
+const{SuccessResponce, ErrorResponce} = require('../utils/common');
 
 /** The API shoul look like this
  * it will be a post request so ---> POST: /airplane
@@ -15,23 +16,16 @@ async function createAirplane(req, res) {
             modelNumber: req.body.modelNumber,
             capacity: req.body.capacity
         });
+        //to assign the airplane object to the data property of the SuccessResponce object.
+        SuccessResponce.data = airplane; 
         return res
                 .status(StatusCodes.CREATED)
-                .json({
-                    success: true,
-                    message: 'Successfully create an airplane',
-                    data: airplane,
-                    error: {}
-                });
-    } catch (error) {
+                .json(SuccessResponce);
+    } catch(error) {
+        ErrorResponce.error = error;
         return res
-                .status(StatusCodes.INTERNAL_SERVER_ERROR)
-                .json({
-                    success: false,
-                    message: 'Something went wrong while creating airplane',
-                    data: {},
-                    error: error
-                });
+                .status(error.statusCode)
+                .json(ErrorResponce);
     }
 
 }
