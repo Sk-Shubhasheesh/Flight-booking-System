@@ -72,8 +72,30 @@ async function getAirplane(req, res){
     }
 }
 
+
+/** The API shoul look like this
+ * it will be a delete request so ---> DELETE: /airplane/:id
+ * And the data will be coming inside request body --->  {}
+*/
+async function destroyAirplanes(req, res){
+    try {
+        const airplanes = await AirplaneService.destroyAirplane(req.params.id);
+        SuccessResponce.data = airplanes;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponce);
+
+    } catch (error) {
+        ErrorResponce.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponce);
+    }
+}
+
 module.exports = {
     createAirplane,
     getAirplanes,
-    getAirplane
+    getAirplane,
+    destroyAirplanes
 }

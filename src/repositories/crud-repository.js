@@ -17,8 +17,11 @@ class CrudRepository {
     const responce = await this.model.destroy({
       where: {
         id: data,
-      },
+      }
     });
+    if(!responce){
+      throw new AppError('Not able to find the resourse', StatusCodes.NOT_FOUND);
+    }
     return responce;
   }
 
