@@ -30,6 +30,11 @@ async function createAirplane(req, res) {
     }
 
 }
+
+/** The API shoul look like this
+ * it will be a post request so ---> POST: /airplane
+ * And the data will be coming inside request body ---> req-body {}
+*/
 async function getAirplanes(req, res){
     try {
         const airplanes = await AirplaneService.getAirplanes();
@@ -46,7 +51,29 @@ async function getAirplanes(req, res){
     }
 }
 
+/** The API shoul look like this
+ * it will be a post request so ---> POST: /airplane/:id
+ * And the data will be coming inside request body ---> req-body {}
+*/
+
+async function getAirplane(req, res){
+    try {
+        const airplanes = await AirplaneService.getAirplane(req.params.id);
+        SuccessResponce.data = airplanes;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponce);
+
+    } catch (error) {
+        ErrorResponce.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponce);
+    }
+}
+
 module.exports = {
     createAirplane,
-    getAirplanes
+    getAirplanes,
+    getAirplane
 }

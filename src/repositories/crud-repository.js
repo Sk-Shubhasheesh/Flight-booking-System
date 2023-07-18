@@ -1,4 +1,6 @@
+const {StatusCodes } = require('http-status-codes')
 const { Logger } = require("../config");
+const AppError = require("../utils/errors/app-error");
 
 class CrudRepository {
   // This class has a constructor method that takes a model parameter
@@ -24,6 +26,9 @@ class CrudRepository {
   async get(data) {
     
       const responce = await this.model.findByPk(data); // findByPk method obtains only a single entry from the table, using the provided primary key.
+      if(!responce) {
+        throw new AppError('Not able to find the resourse', StatusCodes.NOT_FOUND);
+   }
       return responce;
      
   }
