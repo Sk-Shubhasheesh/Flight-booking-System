@@ -62,10 +62,13 @@ async function updateAirplane(id, data) {
     }
     catch(error) {
         if(error.statusCode == StatusCodes.NOT_FOUND) {
-            throw new AppError("Airplane is not present", StatusCodes.NOT_FOUND);
+            throw new AppError('The airplane you request to Update is not present', error.statusCode)
         }
+        throw new AppError('Cannot fetch data of all the airplanes', StatusCodes.INTERNAL_SERVER_ERROR);
     }
-}
+        
+ }
+
 
 
 

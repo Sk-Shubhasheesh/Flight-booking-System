@@ -96,13 +96,17 @@ async function destroyAirplanes(req, res){
 
 async function updateAirplane(req, res) {
     try {
-        await AirplaneService.updateAirplane(req.params.id, req.body);
-        SuccessResponse.message = "Successfully updated airplane";
-        return res.status(StatusCodes.OK).json(SuccessResponse);
+        const airplanes = await AirplaneService.updateAirplane(req.params.id, req.body);
+        SuccessResponce.data = airplanes;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponce);
     }
-    catch(error) {
-        ErrorResponse.error = error;
-        return res.json(ErrorResponse);
+    catch (error) {
+        ErrorResponce.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponce);
     }
 }
 
