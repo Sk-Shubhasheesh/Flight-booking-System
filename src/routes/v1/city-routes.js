@@ -5,7 +5,7 @@ const { CityController } = require('../../controllers');
 
 const router = express.Router();
 
-// /api/v1/cities POST
+// /api/v1/city POST
 router.post('/', 
         CityController.createCity);
 
