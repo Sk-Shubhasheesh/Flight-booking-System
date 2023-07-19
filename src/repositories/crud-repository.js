@@ -53,6 +53,10 @@ class CrudRepository {
           id: id,
         },
       });
+      if(response[0] == 0) {
+        throw new AppError("Could not find resource to update", StatusCodes.NOT_FOUND);
+    }
+  
       return responce;
     
   }
