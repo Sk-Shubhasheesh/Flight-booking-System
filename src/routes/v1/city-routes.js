@@ -27,5 +27,10 @@ router
     .delete('/:id', 
         CityController.destroyCites);
 
+// /api/v1/cities/:id -> UPDATE Request
+router
+    .patch('/:id', 
+        CityController.updateCities);
+
 
 module.exports = router;
