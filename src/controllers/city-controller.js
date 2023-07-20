@@ -62,10 +62,27 @@ async function getCities(req, res){
                .json(ErrorResponce);
         
     }
+} 
+
+// destroy city
+async function destroyCites(req, res){
+    try {
+        const destroy = await CityService.destroyCity(req.params.id);
+        SuccessResponce.data = destroy;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponce)
+    } catch (error) {
+        ErrorResponce.error = error
+        return res
+               .status(error.statusCode)
+               .json(ErrorResponce);
+    }
 }
 
 module.exports = {
     createCity,
     getCity,
-    getCities
+    getCities,
+    destroyCites
 }

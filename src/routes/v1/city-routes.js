@@ -22,5 +22,10 @@ router
     .get('/:id', 
         CityController.getCities);
 
+// /api/v1/cities/:id -> DELETE Request
+router
+    .delete('/:id', 
+        CityController.destroyCites);
+
 
 module.exports = router;
