@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 
 const { CityService } = require('../services');
-const { SuccessResponse, ErrorResponse } = require('../utils/common');
+const { SuccessResponce, ErrorResponce } = require('../utils/common');
 
 
 
@@ -14,15 +14,15 @@ async function createCity(req, res) {
         const city = await CityService.createCity({
             name: req.body.name
         });
-        SuccessResponse.data = city;
+        SuccessResponce.data = city;
         return res
                 .status(StatusCodes.CREATED)
-                .json(SuccessResponse);
+                .json(SuccessResponce);
     } catch(error) {
-        ErrorResponse.error = error;
+        ErrorResponce.error = error;
         return res
                 .status(error.statusCode)
-                .json(ErrorResponse);
+                .json(ErrorResponce);
     }
 }
 

@@ -10,7 +10,7 @@ async function createCity(data) {
         const city = await cityRepository.create(data);
         return city;
     } catch (error) {
-        if(error.name =='SequelizeValidationError') {
+        if(error.name =='SequelizeValidationError' || error.name == 'SequelizeUniqueConstraintError') {
             let explanation = [];
             // statement is used to iterate over the array of errors returned by Sequelize during the validation process
             error.errors.forEach((err) => {
