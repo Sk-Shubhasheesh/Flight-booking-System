@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const { CityService } = require('../services');
 const { SuccessResponce, ErrorResponce } = require('../utils/common');
 const { log } = require('winston');
+const { response } = require('express');
 
 
 
@@ -30,7 +31,7 @@ async function createCity(req, res) {
 // for getting city
 async function getCity(req, res){
     try {
-        console.log("Inside controler");
+        
         const city = await CityService.getCity();
         SuccessResponce.data = city;
         return res
@@ -45,7 +46,26 @@ async function getCity(req, res){
     }
 }
 
+
+// for geting cities by id
+async function getCities(req, res){
+    try {
+        const cities = await CityService.getCities(req.params.id);
+        SuccessResponce.data = cities;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponce)
+    } catch ( error) {
+        ErrorResponce.error = error;
+        return res
+               .status(error.statusCode)
+               .json(ErrorResponce);
+        
+    }
+}
+
 module.exports = {
     createCity,
-    getCity
+    getCity,
+    getCities
 }

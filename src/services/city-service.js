@@ -35,8 +35,23 @@ async function getCity() {
     }
 }
 
+// finding cities by id
+async function getCities(id){
+    try {
+        const cities = await cityRepository.get(id);
+        return cities;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError('The cities, you request is not present', error.statusCode)
+        }
+        throw new AppError('Cannot fetch data of all the airplanes', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+
 
 module.exports = {
     createCity,
-    getCity
+    getCity,
+    getCities
 }
