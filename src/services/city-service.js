@@ -5,6 +5,7 @@ const AppError = require('../utils/errors/app-error');
 
 const cityRepository = new CityRepository();
 
+// for creating
 async function createCity(data) {
     try {
         const city = await cityRepository.create(data);
@@ -23,6 +24,19 @@ async function createCity(data) {
     }
 }
 
+// for finding all city
+async function getCity() {
+    try {
+        
+        const city = await cityRepository.getAll();
+        return city;
+    } catch (error) {
+        throw new AppError('Cannot fetch data of all the cities', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+
 module.exports = {
-    createCity
+    createCity,
+    getCity
 }

@@ -12,5 +12,10 @@ router.post('/',
         CityMiddlewares.validateCreateRequest, 
         CityController.createCity);
 
+// /api/v1/cities -> GET Request
+router
+    .get('/', 
+        CityController.getCity);
+
 
 module.exports = router;
