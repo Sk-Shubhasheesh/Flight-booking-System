@@ -35,7 +35,7 @@ async function createFlight(req, res) {
             totalSeats: req.body.totalSeats
 
         });
-        //to assign the airplane object to the data property of the SuccessResponce object.
+        //to assign the flight object to the data property of the SuccessResponce object.
         SuccessResponce.data = flight; 
         return res
                 .status(StatusCodes.CREATED)
@@ -48,9 +48,26 @@ async function createFlight(req, res) {
     }
 }
 
+async function getAllFlights(req, res){
+   
+    try {
+        const flights = await FlightService.getAllFlights(req.query);
+        SuccessResponce.data = flights; 
+        return res
+                .status(StatusCodes.CREATED)
+                .json(SuccessResponce);
+    } catch (error) {
+        ErrorResponce.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponce); 
+    }
+}
+
 
 module.exports = {
     createFlight,
+    getAllFlights
 
    
 }

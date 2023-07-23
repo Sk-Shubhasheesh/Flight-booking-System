@@ -9,6 +9,11 @@ router
         FlightMiddlewares.validateCreateRequest,
         FlightController.createFlight);
 
+//  /api/v1/flights?trips=MUM-DEL -> GET Request
+router
+    .get('/', 
+        FlightController.getAllFlights);
+
 
 
 
