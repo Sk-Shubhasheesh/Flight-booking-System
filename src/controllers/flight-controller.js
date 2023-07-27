@@ -63,10 +63,31 @@ async function getAllFlights(req, res){
     }
 }
 
+/** The API shoul look like this
+ * it will be a post request so ---> POST: /flights/:id
+ * And the data will be coming inside request body ---> req-body {}
+*/
+
+async function getFlight(req, res){
+    try {
+        const flight = await FlightService.getFlight(req.params.id);
+        SuccessResponce.data = flight;
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponce);
+
+    } catch (error) {
+        ErrorResponce.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponce);
+    }
+}
 
 module.exports = {
     createFlight,
-    getAllFlights
+    getAllFlights,
+    getFlight
 
    
 }

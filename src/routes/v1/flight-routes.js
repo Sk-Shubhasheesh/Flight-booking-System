@@ -15,6 +15,12 @@ router
         FlightController.getAllFlights);
 
 
+//  /api/v1/flights?:id-> GET Request
+router
+    .get('/:id', 
+        FlightController.getFlight);
+
+
 
 
 module.exports = router;
