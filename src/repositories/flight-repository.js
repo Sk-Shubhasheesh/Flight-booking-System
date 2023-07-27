@@ -1,7 +1,8 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const CrudRepository = require('./crud-repository');
 // getting models
-const { Flight, Airplane, Airport, City } = require('../models')
+const { Flight, Airplane, Airport, City } = require('../models');
+const db = require('../models');
 class FlightRepository extends CrudRepository {
     constructor(){
         super(Flight);
@@ -48,16 +49,19 @@ class FlightRepository extends CrudRepository {
     }
 
     async updateRemainingSeats(flightId, seats, dec = true){
+        // put row lock for any kind of update which we want to do 
+        await db.sequelize.query(`SELECT * from Flights WHERE Flights.id= ${flightId} FOR UPDATE;`)
         const flight = await Flight.findByPk(flightId);
-        if(dec){
-            const response = await flight.decrement('totalSeats', {by: seats});
-            return response;
+      
+        if(parseInt(dec)){
+            await flight.decrement('totalSeats', {by: seats});
+            
 
         } else {
-            const response = await flight.increment('totalSeats', {by: seats});
-            return response;
-
+            await flight.increment('totalSeats', {by: seats});
+            
         }
+        return flight;
 
     }
 }
