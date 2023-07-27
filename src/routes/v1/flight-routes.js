@@ -20,6 +20,12 @@ router
     .get('/:id', 
         FlightController.getFlight);
 
+//  /api/v1/flights/:id/seats-> PATCH Request
+router
+    .patch('/:id/seats', 
+        FlightMiddlewares.validateUpdateSeatsRequest,
+        FlightController.updateSeats);
+
 
 
 
